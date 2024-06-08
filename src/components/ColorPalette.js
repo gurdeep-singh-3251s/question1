@@ -34,9 +34,13 @@ const ColorPalette = () => {
           Color Palette
         </Typography>
         <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="colors">
+          <Droppable droppableId="colors" direction="horizontal">
             {(provided) => (
-              <Box {...provided.droppableProps} ref={provided.innerRef} sx={{ display: 'flex', flexWrap: 'wrap' }}>
+              <Box
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}
+              >
                 {colors.map((color, index) => (
                   <Draggable key={color} draggableId={color} index={index}>
                     {(provided) => (
@@ -45,6 +49,7 @@ const ColorPalette = () => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         whileHover={{ scale: 1.05 }}
+                        onDoubleClick={() => handleReplaceColor(index)}
                         style={{
                           backgroundColor: color,
                           color: '#fff',
@@ -53,11 +58,9 @@ const ColorPalette = () => {
                           justifyContent: 'center',
                           width: 100,
                           height: 100,
-                          margin: 8,
                           cursor: 'pointer',
                           ...provided.draggableProps.style
                         }}
-                        onDoubleClick={() => handleReplaceColor(index)}
                       >
                         {color}
                       </motion.div>
